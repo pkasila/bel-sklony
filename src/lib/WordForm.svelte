@@ -88,7 +88,7 @@
     <p>
         Канчатак: <b>{outEnding}</b>
 
-        ({#if slounik}выраятыўнасць, {/if}<a href={'https://slounik.org/search?dict=&search='+encodeURIComponent(word)} target="_blank" rel="noreferrer">Slounik.org</a>)
+        ({#if slounik}варыятыўнасць, {/if}<a href={'https://slounik.org/search?dict=&search='+encodeURIComponent(word)} target="_blank" rel="noreferrer">Slounik.org</a>)
     </p>
 {/if}
 
