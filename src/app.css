@@ -38,6 +38,7 @@ h1 {
 }
 
 .card {
+  width: 300px;
   padding-bottom: 2em;
   display: flex;
   flex-direction: column;

@@ -27,16 +27,17 @@
   </p>
 
   <p class="read-the-docs">
-    &copy; {new Date().getFullYear()} <a class="no-highlight" href="https://pkasila.net/" target="_blank" rel="noreferrer">Павел Касіла</a>
+    &copy; {new Date().getFullYear()} <a class="no-highlight" href="https://pkasila.net/" target="_blank" rel="noreferrer">Павел Касіла</a>.
+    <a class="no-highlight" href="https://github.com/pkasila/bel-sklony" target="_blank" rel="noreferrer">Зыходныя коды</a>
   </p>
 </main>
 
 <style>
   a.no-highlight {
-    color: #b4b4b4;
+    color: #b4b4b4 !important;
   }
   a.no-highlight:hover {
-    color: #9f9f9f;
+    color: #9f9f9f !important;
   }
   .logo {
     height: 8em;
