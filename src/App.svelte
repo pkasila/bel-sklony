@@ -1,0 +1,52 @@
+<script lang="ts">
+  import WordForm from './lib/WordForm.svelte'
+</script>
+
+<svelte:head>
+  <title>Месны склон 2 скланення</title>
+</svelte:head>
+
+<main>
+  <div>
+    <a href="https://lyceum.by" target="_blank" rel="noreferrer">
+      <img src="/lyceum.svg" class="logo" alt="Vite Logo" />
+    </a>
+  </div>
+  <h1>Склоны</h1>
+
+  <p>
+    Толькі месны склон 2 скланення.
+  </p>
+
+  <div class="card">
+    <WordForm />
+  </div>
+
+  <p>
+    Дзякуй <a href="https://instagram.com/marria_wir" target="_blank" rel="noreferrer">Марыі Бадзей</a> за такія ДЗшкі!
+  </p>
+
+  <p class="read-the-docs">
+    &copy; {new Date().getFullYear()} <a class="no-highlight" href="https://pkasila.net/" target="_blank" rel="noreferrer">Павел Касіла</a>
+  </p>
+</main>
+
+<style>
+  a.no-highlight {
+    color: #b4b4b4;
+  }
+  a.no-highlight:hover {
+    color: #9f9f9f;
+  }
+  .logo {
+    height: 8em;
+    padding: 1.5em;
+    will-change: filter;
+  }
+  .logo:hover {
+    filter: drop-shadow(0 0 2em rgb(102, 106, 162));
+  }
+  .read-the-docs {
+    color: #888;
+  }
+</style>
