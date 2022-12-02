@@ -17,7 +17,7 @@
             return;
         }
 
-        const matched = word.toLowerCase().match(/(.*([бвгджзйклмнпрстўфхцчш']))([аеёіуыэюяь]?)$/);
+        const matched = word.toLowerCase().match(/(.*([бвгджзйклмнпрстўфхцчш']))([аеёіуыэюяьо]?)$/);
 
         if (matched == null) {
             alert(`Памылка: увядзіце слова кірыліцай`);
