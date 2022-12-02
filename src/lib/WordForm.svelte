@@ -17,7 +17,7 @@
             return;
         }
 
-        const matched = word.toLowerCase().match(/(.*([бвгджзйклмнпрстўфхцчш]))([аеёіуыэюяь]?)$/);
+        const matched = word.toLowerCase().match(/(.*([бвгджзйклмнпрстўфхцчш']))([аеёіуыэюяь]?)$/);
 
         if (matched == null) {
             alert(`Памылка: увядзіце слова кірыліцай`);
@@ -61,7 +61,7 @@
                 break;
             default:
                 // астатнія: скончваецца на мяккі ці цверды
-                if (ending.length > 0 && 'eёіюяь'.includes(ending)) {
+                if (ending.length > 0 && 'еёіюяь'.includes(ending)) {
                     // мяккі
                     if (type === 'asab') {
                         outEnding = 'ю';
