@@ -35,44 +35,43 @@
 
         outBase = base;
 
-        switch (baseEnd) {
-            case 'ж':
-            case 'ш':
-            case 'ч':
-            case 'ц':
-            case 'р':
-                // зацвярдзелыя
-                if (type === 'asab') {
-                    outEnding = 'у';
-                } else {
-                    outEnding = 'ы';
-                }
-                break;
-            case 'г':
-            case 'к':
-            case 'х':
-                // гкх
-                if (type === 'asab') {
-                    outEnding = 'у';
-                } else {
-                    outEnding = 'у/е';
-                    slounik = true;
-                }
-                break;
-            default:
-                // астатнія: скончваецца на мяккі ці цверды
-                if (ending.length > 0 && 'еёіюяь'.includes(ending)) {
-                    // мяккі
+        if (ending.length > 0 && 'еёіюяь'.includes(ending)) {
+            // мяккі
+            if (type === 'asab') {
+                outEnding = 'ю';
+            } else {
+                outEnding = 'і';
+            }
+        } else {
+            switch (baseEnd) {
+                case 'ж':
+                case 'ш':
+                case 'ч':
+                case 'ц':
+                case 'р':
+                    // зацвярдзелыя
                     if (type === 'asab') {
-                        outEnding = 'ю';
+                        outEnding = 'у';
                     } else {
-                        outEnding = 'і';
+                        outEnding = 'ы';
                     }
-                } else {
-                    // цверды
+                    break;
+                case 'г':
+                case 'к':
+                case 'х':
+                    // гкх
+                    if (type === 'asab') {
+                        outEnding = 'у';
+                    } else {
+                        outEnding = 'у/е';
+                        slounik = true;
+                    }
+                    break;
+                default:
+                    // астатнія: скончваецца на цверды
                     outEnding = 'е';
-                }
-                break;
+                    break;
+            }
         }
     }
 </script>
