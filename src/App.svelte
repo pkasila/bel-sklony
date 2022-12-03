@@ -12,19 +12,11 @@
       <img src="/lyceum.svg" class="logo" alt="Vite Logo" />
     </a>
   </div>
-  <h1>Склоны</h1>
-
-  <p>
-    Толькі месны склон 2 скланення.
-  </p>
+  <h1>Месны склон</h1>
 
   <div class="card">
     <WordForm />
   </div>
-
-  <p>
-    Дзякуй <a href="https://instagram.com/marria_wir" target="_blank" rel="noreferrer">Марыі Бадзей</a> за такія ДЗшкі!
-  </p>
 
   <p class="read-the-docs">
     &copy; {new Date().getFullYear()} <a class="no-highlight" href="https://pkasila.net/" target="_blank" rel="noreferrer">Павел Касіла</a>.

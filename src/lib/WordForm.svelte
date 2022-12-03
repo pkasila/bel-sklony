@@ -1,77 +1,186 @@
 <script lang="ts">
+    const soft = "аоуыэіеёюя";
+    const hard = "шжчрц";
+
     let word = '';
-    let type = 'asab';
+    let genus = 'male';
+    let type = 'usual';
+    let common = 'female';
+    let person = '1';
 
-    let slounik = false;
+    let output: string = null;
 
-    let outBase = '';
-    let outEnding = '';
-
-    const process = () => {
-        outBase = '';
-        outEnding = '';
-        slounik = false;
-
-        if (word.length == 0) {
-            alert(`Памылка: увядзіце слова`);
-            return;
+    function process() {
+        switch (word.toLowerCase()) {
+            case 'імя':
+                output = 'імі (імені)'
+                return;
+            case 'племя':
+                output = 'племі (племені)'
+                return;
+            case 'стрэмя':
+                output = 'стрэмі (стрэмені)'
+                return;
+            case 'маці':
+                output = 'маці'
+                return;
+            case 'сірата':
+                output = 'сіраце'
+                return;
+            default:
+                break;
         }
 
-        const matched = word.toLowerCase().match(/(.*([бвгджзйклмнпрстўфхцчш']))([аеёіуыэюяьо]?)$/);
+        let base = word;
+        let lastLetter;
 
-        if (matched == null) {
-            alert(`Памылка: увядзіце слова кірыліцай`);
-            return;
-        }
-
-        const base = matched[1];
-        const baseEnd = matched[2];
-        const ending = matched[3];
-
-        if (baseEnd.length == 0) {
-            alert(`Памылка: аснова "${base}"`);
-            return;
-        }
-
-        outBase = base;
-
-        if (ending.length > 0 && 'еёіюяь'.includes(ending)) {
-            // мяккі
-            if (type === 'asab') {
-                outEnding = 'ю';
-            } else {
-                outEnding = 'і';
-            }
-        } else {
-            switch (baseEnd) {
-                case 'ж':
-                case 'ш':
-                case 'ч':
-                case 'ц':
-                case 'р':
-                    // зацвярдзелыя
-                    if (type === 'asab') {
-                        outEnding = 'у';
+        switch (type) {
+            case 'multiple':
+                lastLetter = base.charAt(base.length - 1);
+                base = base.substring(0, base.length - 1);
+                if ((base.charAt(base.length - 1) == 'н') && (base.charAt(base.length - 1) == 'і')) {
+                    output = base + "(ях)";
+                } else {
+                    output = base + "(ах)";
+                }
+                break;
+            case 'substitute':
+                lastLetter = base.charAt(base.length - 1);
+                if (lastLetter == 'я') {
+                    output = base.substring(0, base.length - 2) + "(" + base.charAt(base.length - 2) + "й)";
+                } else {
+                    if (soft.includes(base.charAt(base.length - 2))) {
+                        if (base.charAt(base.length - 2) == 'я' ||
+                            'кгх'.includes(base.charAt(base.length - 3))) {
+                            output = base.substring(0, base.length - 2) + "(ім)";
+                        } else {
+                            output = base.substring(0, base.length - 2) + "(ым)";
+                        }
                     } else {
-                        outEnding = 'ы';
+                        output = base.substring(0, base.length - 1) + "(" + base.charAt(base.length - 1) + "м)";
                     }
-                    break;
-                case 'г':
-                case 'к':
-                case 'х':
-                    // гкх
-                    if (type === 'asab') {
-                        outEnding = 'у';
+                }
+                break;
+            default:
+                if (genus == 'male') {
+                    output = base.substring(0, base.length - 1);
+                    lastLetter = base.charAt(base.length - 2);
+
+                    if (lastLetter == 'к') {
+                        output += "(у)";
+                    } else if (lastLetter == 'г') {
+                        output = base + "(у) / " + base.substring(0, base.length - 1) + "з(е)";
+                    } else if (lastLetter == 'х') {
+                        output = base + "(у) / " + base.substring(0, base.length - 1) + "с(е)";
+                    } else if (lastLetter == 'ь') {
+                        output = base.substring(0, base.length - 1) + (person == '1' ? "(ю)" : "(і)");
+                    } else if (hard.includes(base.charAt(base.length - 1))) {
+                        output += person ? "(у)" : "(ы)";
                     } else {
-                        outEnding = 'у/е';
-                        slounik = true;
+                        switch (output.charAt(base.length - 1)) {
+                            case 'й':
+                            case 'ь':
+                                output = output.substring(0, base.length - 1);
+                                break;
+                            case 'т':
+                                output = output.substring(0, base.length - 1) + 'ц';
+                                break;
+                            case 'дз':
+                                output = output.substring(0, base.length - 1) + "дз";
+                                break;
+                        }
+                        output += "(е)";
                     }
-                    break;
-                default:
-                    // астатнія: скончваецца на цверды
-                    outEnding = 'е';
-                    break;
-            }
+                } else if (genus == 'female' || (genus == 'common' && common == 'female')) {
+                    if (!soft.includes(base.charAt(base.length - 1))) {
+                        output = base;
+                        lastLetter = base.charAt(base.length - 1);
+                        if (hard.includes(lastLetter)) {
+                            output += "(ы)";
+                        } else {
+                            switch (output.charAt(output.length - 1)) {
+                                case 'й':
+                                case 'ь':
+                                    output = output.substring(0, base.length - 1);
+                                    break;
+                                case 'т':
+                                    output = output.substring(0, base.length - 1) + 'ц';
+                                    break;
+                            }
+                            output += "(і)";
+                        }
+                    } else {
+                        let isSoft = base.charAt(base.length - 1) == 'я';
+                        base = base.substring(0, base.length - 1);
+                        output = base;
+
+                        lastLetter = base.charAt(base.length - 1);
+
+                        if (hard.includes(lastLetter)) {
+                            output += "(ы)";
+                        } else if (isSoft) {
+                            output += "(і)";
+                        } else if (lastLetter == 'г') {
+                            output = base.substring(0, base.length - 1) + "з(е)";
+                        } else if (lastLetter == 'х') {
+                            output = base.substring(0, base.length - 1) + "с(е)";
+                        } else if (lastLetter == 'к') {
+                            output = base.substring(0, base.length - 1) + "ц(ы) / " +
+                                base.substring(0, base.length - 1) + "ц(Э́) (націск)";
+                        } else {
+                            switch(output.charAt(base.length - 1)) {
+                                case 'й':
+                                case 'ь':
+                                    output = output.substring(0, base.length - 1);
+                                    break;
+                                case 'т':
+                                    output = output.substring(0, base.length - 1) + 'ц';
+                                    break;
+                                case 'д':
+                                    output = output.substring(0, base.length - 1) + "дз";
+                                    break;
+                            }
+                            output += "(е)";
+                        }
+                    }
+                } else if (genus == 'none') {
+                    while (soft.includes(base.charAt(base.length - 1))) {
+                        base = base.substring(0, base.length - 1);
+                    }
+
+                    output = base;
+                    switch(output.charAt(base.length - 1)) {
+                        case 'й':
+                        case 'ь':
+                            output = output.substring(0, base.length - 1);
+                            break;
+                        case 'т':
+                            output = output.substring(0, base.length - 1) + 'ц';
+                            break;
+                        case 'д':
+                            output = output.substring(0, base.length - 1) + "дз";
+                            break;
+                    }
+                    output = base + "(е)";
+                } else {
+                    if (common == 'male') {
+                        lastLetter = base.charAt(base.length - 1);
+
+                        if (lastLetter == 'я') {
+                            output = base.substring(0, base.length - 1) + "(ю) / " +
+                                base.substring(0, base.length - 1) + "(І́) (націск)";
+                        } else {
+                            output = base.substring(0, base.length - 1) + "(у) / " +
+                                base.substring(0, base.length - 1) + "(Е́) (націск)";
+                        }
+                    } else if (common == 'minor') {
+                        while (soft.includes(base.charAt(base.length - 1))) {
+                            base = base.substring(0, base.length - 1);
+                        }
+                        output = base + "яц(і)";
+                    }
+                }
+                break;
         }
     }
 </script>
@@ -79,15 +188,37 @@
 <input bind:value={word} placeholder="Слова"/>
 
 <select bind:value={type}>
-    <option value="asab">Асабовы</option>
-    <option value="neasab">Неасабовы</option>
+    <option disabled>тып</option>
+    <option value="usual">звычайны</option>
+    <option value="multiple">множналікавы</option>
+    <option value="substitute">субстантываваны</option>
 </select>
+<select bind:value={person}>
+    <option disabled>асабовы?</option>
+    <option value="1">асабовы</option>
+    <option value="0">неасабовы</option>
+</select>
+<select bind:value={genus}>
+    <option disabled>род</option>
+    <option value="male">мужчынскі</option>
+    <option value="female">жаночы</option>
+    <option value="none">ніякі</option>
+    <option value="common">агульны</option>
+</select>
+{#if genus === 'common'}
+    <select bind:value={common}>
+        <option disabled>агульны які?</option>
+        <option value="female">жанчына</option>
+        <option value="male">мужчына</option>
+        <option value="minor">маладая істота</option>
+    </select>
+{/if}
 
-{#if outEnding.length > 0}
+{#if output != null}
     <p>
-        Канчатак: <b>{outEnding}</b>
+        Вынік: <b>{output}</b>
 
-        ({#if slounik}варыятыўнасць, {/if}<a href={'https://slounik.org/search?dict=&search='+encodeURIComponent(word)} target="_blank" rel="noreferrer">Slounik.org</a>)
+        (<a href={'https://slounik.org/search?dict=&search='+encodeURIComponent(word)} target="_blank" rel="noreferrer">Slounik.org</a>)
     </p>
 {/if}
 
