@@ -207,11 +207,6 @@
     <option value="multiple">множналікавы</option>
     <option value="substitute">субстантываваны</option>
 </select>
-<select bind:value={person}>
-    <option disabled>асабовы?</option>
-    <option value="1">асабовы</option>
-    <option value="0">неасабовы</option>
-</select>
 <select bind:value={genus}>
     <option disabled>род</option>
     <option value="male">мужчынскі</option>
@@ -219,6 +214,13 @@
     <option value="none">ніякі</option>
     <option value="common">агульны</option>
 </select>
+{#if genus === 'male'}
+    <select bind:value={person}>
+        <option disabled>асабовы?</option>
+        <option value="1">асабовы</option>
+        <option value="0">неасабовы</option>
+    </select>
+{/if}
 {#if genus === 'common'}
     <select bind:value={common}>
         <option disabled>агульны які?</option>
