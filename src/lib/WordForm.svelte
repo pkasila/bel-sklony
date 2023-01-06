@@ -63,15 +63,20 @@
                 }
                 break;
             default:
+                const asabovy = person === '1';
                 if (genus === 'none') {
                     // 2 skl
                     output = base;
+                    lastLetter = base.charAt(base.length - 1);
+                    let g;
                     while (glsn.includes(base.charAt(base.length - 1))) {
-                        lastLetter = base.charAt(base.length - 1);
+                        g = base.charAt(base.length - 1);
                         base = base.substring(0, base.length - 1);
                     }
-                    if (miag.includes(lastLetter)) {
-                        output = output.substring(0, output.length - 1) + '(і)';
+                    if (lastLetter === 'ь' || lastLetter === 'й' || miag.includes(g)) {
+                        output = base.substring(0, base.length - 1) + (asabovy ? '(ю)' : '(і)')
+                    } else if (hard.includes(lastLetter)) {
+                        output += asabovy ? '(у)' : '(ы)'
                     } else {
                         output = base;
                         switch (output.charAt(output.length - 1)) {
@@ -81,6 +86,10 @@
                                 break;
                             case 'т':
                                 output = output.substring(0, output.length - 1) + 'ц';
+                                break;
+                            case 'д':
+                                output = output.substring(0, output.length - 1) + 'дз';
+                                break;
                         }
                         output += '(е)';
                     }
@@ -92,6 +101,11 @@
                         // 2 skl
                         output = base;
                         lastLetter = base.charAt(base.length - 1);
+                        let g;
+                        while (glsn.includes(base.charAt(base.length - 1))) {
+                            g = base.charAt(base.length - 1);
+                            base = base.substring(0, base.length - 1);
+                        }
                         switch (lastLetter) {
                             case 'к':
                                 output += '(у)';
@@ -103,8 +117,7 @@
                                 output += '(у) / с(е)';
                                 break;
                             default:
-                                const asabovy = person === '1';
-                                if (lastLetter === 'ь' || lastLetter === 'й') {
+                                if (lastLetter === 'ь' || lastLetter === 'й' || miag.includes(g)) {
                                     output = base.substring(0, base.length - 1) + (asabovy ? '(ю)' : '(і)')
                                 } else if (hard.includes(lastLetter)) {
                                     output += asabovy ? '(у)' : '(ы)'
