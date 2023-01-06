@@ -96,7 +96,7 @@
                         output = base + (asabovy ? '(ю)' : '(і)');
                     } else if (lastLetter === 'ь' || lastLetter === 'й') {
                         base = base.substring(0, base.length - 1);
-                        if (base.endsWith('ан')) {
+                        if (base.match(/(.*)([ао]н)$/) !== null) {
                             base = base.substring(0, base.length - 2) + 'н';
                         }
                         output = base + (asabovy ? '(ю)' : '(і)');
