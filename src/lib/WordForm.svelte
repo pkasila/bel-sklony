@@ -95,7 +95,11 @@
                     if (miag.includes(g)) {
                         output = base + (asabovy ? '(ю)' : '(і)');
                     } else if (lastLetter === 'ь' || lastLetter === 'й') {
-                        output = base.substring(0, base.length - 1) + (asabovy ? '(ю)' : '(і)')
+                        base = base.substring(0, base.length - 1);
+                        if (base.endsWith('ан')) {
+                            base = base.substring(0, base.length - 2) + 'н';
+                        }
+                        output = base + (asabovy ? '(ю)' : '(і)');
                     } else if (hard.includes(lastLetter)) {
                         output += asabovy ? '(у)' : '(ы)'
                     } else {
