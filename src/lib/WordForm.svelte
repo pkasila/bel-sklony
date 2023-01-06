@@ -71,86 +71,91 @@
                         base = base.substring(0, base.length - 1);
                     }
                     if (miag.includes(lastLetter)) {
-                        output = output.substring(0, output.length-1) + '(і)';
+                        output = output.substring(0, output.length - 1) + '(і)';
                     } else {
                         output = base;
-                        switch(output.charAt(output.length - 1)) {
+                        switch (output.charAt(output.length - 1)) {
                             case 'й':
                             case 'ь':
-                                output = output.substring(0, output.length-1);
+                                output = output.substring(0, output.length - 1);
                                 break;
                             case 'т':
-                                output = output.substring(0, output.length-1) + 'ц';
+                                output = output.substring(0, output.length - 1) + 'ц';
                         }
                         output += '(е)';
                     }
                 } else if (genus === 'male') {
-                    // 2 skl
-                    output = base;
-                    lastLetter = base.charAt(base.length-1);
-                    switch(lastLetter) {
-                        case 'к':
-                            output += '(у)';
-                            break;
-                        case 'г':
-                            output += '(у) / з(е)';
-                            break;
-                        case 'х':
-                            output += '(у) / с(е)';
-                            break;
-                        default:
-                            const asabovy = person === '1';
-                            if (lastLetter === 'ь' || lastLetter === 'й') {
-                                output = base.substring(0, base.length-1) + (asabovy ? '(ю)' : '(і)')
-                            } else if (hard.includes(lastLetter)) {
-                                output += asabovy ? '(у)' : '(ы)'
-                            } else {
-                                switch(output.charAt(output.length -1)) {
-                                    case 'й':
-                                    case 'ь':
-                                        output = output.substring(0, output.length-1);
-                                        break;
-                                    case 'т':
-                                        output = output.substring(0, output.length-1) + 'ц';
-                                        break;
-                                    case 'д':
-                                        output = output.substring(0, output.length-1) + 'дз';
-                                        break;
+                    if ('ая'.includes(base.charAt(base.length - 1))) {
+                        output = base.substring(0, base.length - 1);
+                        output += base.charAt(base.length - 1) === 'я' ? '(ю)' : '(у)';
+                    } else {
+                        // 2 skl
+                        output = base;
+                        lastLetter = base.charAt(base.length - 1);
+                        switch (lastLetter) {
+                            case 'к':
+                                output += '(у)';
+                                break;
+                            case 'г':
+                                output += '(у) / з(е)';
+                                break;
+                            case 'х':
+                                output += '(у) / с(е)';
+                                break;
+                            default:
+                                const asabovy = person === '1';
+                                if (lastLetter === 'ь' || lastLetter === 'й') {
+                                    output = base.substring(0, base.length - 1) + (asabovy ? '(ю)' : '(і)')
+                                } else if (hard.includes(lastLetter)) {
+                                    output += asabovy ? '(у)' : '(ы)'
+                                } else {
+                                    switch (output.charAt(output.length - 1)) {
+                                        case 'й':
+                                        case 'ь':
+                                            output = output.substring(0, output.length - 1);
+                                            break;
+                                        case 'т':
+                                            output = output.substring(0, output.length - 1) + 'ц';
+                                            break;
+                                        case 'д':
+                                            output = output.substring(0, output.length - 1) + 'дз';
+                                            break;
+                                    }
+                                    output += '(е)';
                                 }
-                                output += '(е)';
-                            }
+                        }
                     }
                 } else if (genus === 'female' || (genus === 'common' && common === 'female')) {
-                    if (!glsn.includes(base.charAt(base.length-1))) { // 3 skl
+                    if (!glsn.includes(base.charAt(base.length - 1))) { // 3 skl
                         output = base;
-                        lastLetter = base.charAt(base.length-1);
+                        lastLetter = base.charAt(base.length - 1);
                         if (hard.includes(lastLetter)) {
                             output += '(ы)';
                         } else {
-                            switch(output.charAt(output.length -1)) {
+                            switch (output.charAt(output.length - 1)) {
                                 case 'й':
                                 case 'ь':
-                                    output = output.substring(0, output.length-1);
+                                    output = output.substring(0, output.length - 1);
                                     break;
                                 case 'т':
-                                    output = output.substring(0, output.length-1) + 'ц';
+                                    output = output.substring(0, output.length - 1) + 'ц';
                                     break;
                             }
                             output += '(і)';
                         }
                     } else { // 1 skl
-                        const soft = base.charAt(base.length-1) === 'я';
-                        base = base.substring(0, base.length-1);
+                        const soft = base.charAt(base.length - 1) === 'я';
+                        base = base.substring(0, base.length - 1);
                         output = base;
-                        lastLetter = base.charAt(base.length-1);
+                        lastLetter = base.charAt(base.length - 1);
 
                         if (hard.includes(lastLetter)) {
                             output += '(ы)';
                         } else if (soft) {
                             output += '(і)';
                         } else if ('гкх'.includes(lastLetter)) {
-                            output = output.substring(0, output.length-1);
-                            switch(lastLetter) {
+                            output = output.substring(0, output.length - 1);
+                            switch (lastLetter) {
                                 case 'к':
                                     output += 'ц(ы) або ц(Э́)';
                                     break;
@@ -162,13 +167,13 @@
                                     break;
                             }
                         } else {
-                            switch(output.charAt(output.length -1)) {
+                            switch (output.charAt(output.length - 1)) {
                                 case 'й':
                                 case 'ь':
-                                    output = output.substring(0, output.length-1);
+                                    output = output.substring(0, output.length - 1);
                                     break;
                                 case 'т':
-                                    output = output.substring(0, output.length-1) + 'ц';
+                                    output = output.substring(0, output.length - 1) + 'ц';
                                     break;
                             }
                             output += '(е)';
