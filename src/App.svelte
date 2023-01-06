@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Месны склон 2 скланення</title>
+  <title>Месны склон?</title>
 </svelte:head>
 
 <main>
