@@ -1,5 +1,6 @@
 <script lang="ts">
     const glsn = "аоуыэіеёюя";
+    const miag = "іеёюя";
     const hard = "шжчрц";
 
     let word = '';
@@ -64,19 +65,25 @@
             default:
                 if (genus === 'none') {
                     // 2 skl
+                    output = base;
                     while (glsn.includes(base.charAt(base.length - 1))) {
+                        lastLetter = base.charAt(base.length - 1);
                         base = base.substring(0, base.length - 1);
                     }
-                    output = base;
-                    switch(output.charAt(output.length -1)) {
-                        case 'й':
-                        case 'ь':
-                            output = output.substring(0, output.length-1);
-                            break;
-                        case 'т':
-                            output = output.substring(0, output.length-1) + 'ц';
+                    if (miag.includes(lastLetter)) {
+                        output = output.substring(0, output.length-1) + '(і)';
+                    } else {
+                        output = base;
+                        switch(output.charAt(output.length - 1)) {
+                            case 'й':
+                            case 'ь':
+                                output = output.substring(0, output.length-1);
+                                break;
+                            case 'т':
+                                output = output.substring(0, output.length-1) + 'ц';
+                        }
+                        output += '(е)';
                     }
-                    output += '(е)';
                 } else if (genus === 'male') {
                     // 2 skl
                     output = base;
@@ -105,6 +112,9 @@
                                         break;
                                     case 'т':
                                         output = output.substring(0, output.length-1) + 'ц';
+                                        break;
+                                    case 'д':
+                                        output = output.substring(0, output.length-1) + 'дз';
                                         break;
                                 }
                                 output += '(е)';
@@ -139,6 +149,7 @@
                         } else if (soft) {
                             output += '(і)';
                         } else if ('гкх'.includes(lastLetter)) {
+                            output = output.substring(0, output.length-1);
                             switch(lastLetter) {
                                 case 'к':
                                     output += 'ц(ы) або ц(Э́)';
